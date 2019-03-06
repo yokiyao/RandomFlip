@@ -105,9 +105,9 @@ void draw() {
    println(  timer + "     " + faces.length);
      //smoothedfaceH = lerp(smoothedfaceH, faces[0].height, 0.05);
      if (timer > 200){
-       smoothedfaceX = lerp(smoothedfaceX, 24, 0.001);
-       smoothedfaceY = lerp(smoothedfaceY, 21, 0.001);
-       smoothedfaceW = lerp(smoothedfaceW, 25, 0.001);
+       smoothedfaceX = lerp(smoothedfaceX, 120, 0.005);
+       smoothedfaceY = lerp(smoothedfaceY, 105, 0.005);
+       smoothedfaceW = lerp(smoothedfaceW, 39, 0.005);
        sendOSC(smoothedfaceX, smoothedfaceY, smoothedfaceW, 0);
        if (timer > 1000){
          timer = 0;
