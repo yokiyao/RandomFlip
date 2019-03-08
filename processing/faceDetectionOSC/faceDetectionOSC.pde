@@ -47,14 +47,14 @@ void setup() {
    * and the port of the remote location address are the same, hence you will
    * send messages back to this sketch.
    */
-  myRemoteLocation = new NetAddress("127.0.0.1",13500);
+  myRemoteLocation = new NetAddress("127.0.0.1",13000);
 }
 
 int noise_reduce_v = 6;
-float smoothedfaceX = 0;
-float smoothedfaceY = 0;
-float smoothedfaceW = 0;
-float smoothedfaceH = 0;
+float smoothedfaceX = width/2;
+float smoothedfaceY = height/2;
+float smoothedfaceW = 50;
+float smoothedfaceH = 50;
 int timer = 0;
 void draw() {
 
@@ -85,17 +85,23 @@ void draw() {
           faces[0] = face;
         }
       }
-      smoothedfaceX = lerp(smoothedfaceX, faces[0].x, 0.05);
-      smoothedfaceY = lerp(smoothedfaceY, faces[0].y, 0.05);
-      smoothedfaceW = lerp(smoothedfaceW, faces[0].width, 0.05);
-      smoothedfaceH = lerp(smoothedfaceH, faces[0].height, 0.05);
-      rect(smoothedfaceX, smoothedfaceY, smoothedfaceW, smoothedfaceH);
-      //float x = map(faces[0].x,0,320, -2,2);
-      //float y = map(faces[0].y, 0, 240,-2,2);
-      println(smoothedfaceX, smoothedfaceY, 
-              smoothedfaceW, faces.length);
-      sendOSC(smoothedfaceX, smoothedfaceY, 
-              smoothedfaceW, 1);
+      int off = 24;
+        if ( abs(smoothedfaceX - faces[0].x) > off || abs(smoothedfaceY - faces[0].y) > off
+        || abs(smoothedfaceW - faces[0].width) > off){
+            
+          smoothedfaceX = lerp(smoothedfaceX, faces[0].x, 0.02);
+          smoothedfaceY = lerp(smoothedfaceY, faces[0].y, 0.02);
+          smoothedfaceW = lerp(smoothedfaceW, faces[0].width, 0.02);
+          smoothedfaceH = lerp(smoothedfaceH, faces[0].height, 0.02);
+          }
+          rect(smoothedfaceX, smoothedfaceY, smoothedfaceW, smoothedfaceH);
+          //float x = map(faces[0].x,0,320, -2,2);
+          //float y = map(faces[0].y, 0, 240,-2,2);
+          println(smoothedfaceX, smoothedfaceY, 
+                  smoothedfaceW, faces.length);
+          sendOSC(smoothedfaceX, smoothedfaceY, 
+                  smoothedfaceW, 1);
+     
       
    // }
     
@@ -105,8 +111,8 @@ void draw() {
    println(  timer + "     " + faces.length);
      //smoothedfaceH = lerp(smoothedfaceH, faces[0].height, 0.05);
      if (timer > 200){
-       smoothedfaceX = lerp(smoothedfaceX, 120, 0.005);
-       smoothedfaceY = lerp(smoothedfaceY, 105, 0.005);
+       smoothedfaceX = lerp(smoothedfaceX, 135, 0.005);
+       smoothedfaceY = lerp(smoothedfaceY, 91, 0.005);
        smoothedfaceW = lerp(smoothedfaceW, 39, 0.005);
        sendOSC(smoothedfaceX, smoothedfaceY, smoothedfaceW, 0);
        if (timer > 1000){
